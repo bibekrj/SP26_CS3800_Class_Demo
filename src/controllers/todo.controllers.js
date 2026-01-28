@@ -24,3 +24,15 @@ export function createTodos(req, res){
 res.status(201).json({message:"Created", todo});
 
 }
+
+export function toggleTodo(req, res){
+    const id = Number(req.params.id);
+    const todo = todos.find(t => t.id === id);
+
+    if(!todo) return res.status(404).json({error:"todo not found", id});
+
+    todo.done = !todo.done;
+    res.json({message:"Toggled", todo});
+   
+
+}
