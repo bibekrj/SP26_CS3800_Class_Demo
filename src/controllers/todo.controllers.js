@@ -1,38 +1,41 @@
-let nextId = 3;
-
-const todos =[
-    {id:1, task:"Tryr to have fun with express",done:false},
-    {id:2, task:"Buy eggs", done: false}
-]
+import { getAllTodos, createTodo,toggleTodoById,deleteTodoById } from "../services/todo.service.js";
 
 
 export function listTodos(req, res){
+    const todos = getAllTodos();
     res.json({count: todos.length, todos});
 }
 
 
 export function createTodos(req, res){
-    const {task} = req.body;
-
-    if(!task || typeof task !=="string" || task.trim()===""){
-        return res.status(400).json({error:"task is required. You should provide non-empty string"});
-    }
-
-    const todo ={id: nextId++, task:task.trim(), done: false};
-    todos.push(todo);
-
-res.status(201).json({message:"Created", todo});
-
+    try{
+        const {task} = req.body;
+        const todo = createTodo(task);
+        res.status(201).json({message:"Created", todo});
+    } catch(err){
+        res.status(400).json({error:err.message});
+    } 
 }
 
 export function toggleTodo(req, res){
     const id = Number(req.params.id);
-    const todo = todos.find(t => t.id === id);
+    const todo = toggleTodoById(id);
 
-    if(!todo) return res.status(404).json({error:"todo not found", id});
-
-    todo.done = !todo.done;
+    if(!todo){
+        return res.status(400).json({error : "Todo not found"});
+    }
     res.json({message:"Toggled", todo});
-   
 
+}
+
+
+export function removeTodo(req, res){
+    const id = Number(req.params.id);
+    const todo = deleteTodoById(id);
+
+    if(!todo){
+        return res.status(400).json({error: "Todo not found"})
+    }
+
+    res.json({message:"Deleted Successfully"})
 }
