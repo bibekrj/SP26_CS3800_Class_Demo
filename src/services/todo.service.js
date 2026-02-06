@@ -1,44 +1,38 @@
-// WILL NEVER HAVE ANYTHING 
-// RELATING TO HTTP CALLS OR RESPONSES
+// WILL NEVER HAVE ANYTHING RELATING TO HTTP CALLS OR RESPONSES
 
-let nextId = 3;
+import ToDoModel from "../models/todo.models.js"
 
-const todos =[
-    {id:1, task:"Tryr to have fun with express",done:false},
-    {id:2, task:"Buy eggs", done: false}
-]
-
-export function getAllTodos(){
-    return todos;
+function getTodosService(){
+    return ToDoModel.getAllTodos();
 }
 
-
-export function createTodo(task){
-      if(!task || typeof task !=="string" || task.trim()===""){
+function createTodoService(task){
+    if(!task || typeof task !=="string" || task.trim()===""){
         // return res.status(400).json({error:"task is required. You should provide non-empty string"});
         throw new error("Invalid task")
     }
-
-    const todo ={id: nextId++, task:task.trim(), done: false};
-    todos.push(todo);
-    return todo;
+    return ToDoModel.createTodo(task);
 }
 
-export function toggleTodoById(id){
-    const todo = todos.find(t => t.id === id);
-    if(!todo){
-        return null;
-    }
-    todo.done= !todo.done;
-    return todo;
+function toggleTodoByIdService(id){
+    // const todo = todos.find(t => t.id === id);
+    // if(!todo){
+    //     return null;
+    // }
+    return ToDoModel.toggleTodoById(id);
 }
 
-export function deleteTodoById(id){
-    const todoIndex = todos.findIndex(t => t.id === id);
-
-    if(todoIndex === -1){
-        return null;
-    }
-
-    return todos.splice(todoIndex, 1)[0];
+function deleteTodoByIdService(id){
+    return ToDoModel.deleteTodoById(id);
 }
+
+
+export {
+    getTodosService,
+    createTodoService,
+    toggleTodoByIdService,
+    deleteTodoByIdService
+
+};
+
+

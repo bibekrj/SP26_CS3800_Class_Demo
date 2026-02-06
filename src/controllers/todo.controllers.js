@@ -1,8 +1,9 @@
-import { getAllTodos, createTodo,toggleTodoById,deleteTodoById } from "../services/todo.service.js";
+// import { getTodosService, createTodoService,toggleTodoByIdService,deleteTodoByIdService } from "../services/todo.service.js";
 
+import {getTodosService, createTodoService, toggleTodoByIdService, deleteTodoByIdService} from "../services/todo.service.js";
 
 export function listTodos(req, res){
-    const todos = getAllTodos();
+    const todos = getTodosService();
     res.json({count: todos.length, todos});
 }
 
@@ -10,7 +11,7 @@ export function listTodos(req, res){
 export function createTodos(req, res){
     try{
         const {task} = req.body;
-        const todo = createTodo(task);
+        const todo = createTodoService(task);
         res.status(201).json({message:"Created", todo});
     } catch(err){
         res.status(400).json({error:err.message});
@@ -19,7 +20,7 @@ export function createTodos(req, res){
 
 export function toggleTodo(req, res){
     const id = Number(req.params.id);
-    const todo = toggleTodoById(id);
+    const todo = toggleTodoByIdService(id);
 
     if(!todo){
         return res.status(400).json({error : "Todo not found"});
@@ -31,7 +32,7 @@ export function toggleTodo(req, res){
 
 export function removeTodo(req, res){
     const id = Number(req.params.id);
-    const todo = deleteTodoById(id);
+    const todo = deleteTodoByIdService(id);
 
     if(!todo){
         return res.status(400).json({error: "Todo not found"})
