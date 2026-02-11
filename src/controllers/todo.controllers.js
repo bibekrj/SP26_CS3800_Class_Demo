@@ -2,8 +2,8 @@
 
 import {getTodosService, createTodoService, toggleTodoByIdService, deleteTodoByIdService} from "../services/todo.service.js";
 
-export function listTodos(req, res){
-    const todos = getTodosService();
+export async function listTodos(req, res){
+    const todos = await getTodosService();
     res.json({count: todos.length, todos});
 }
 

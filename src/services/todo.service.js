@@ -1,9 +1,9 @@
 // WILL NEVER HAVE ANYTHING RELATING TO HTTP CALLS OR RESPONSES
 
-import ToDoModel from "../models/todo.models.js"
+import * as ToDoModel from "../models/todo.models.js"
 
-function getTodosService(){
-    return ToDoModel.getAllTodos();
+export async function getTodosService(){
+    return await ToDoModel.getAllTodos();
 }
 
 function createTodoService(task){
@@ -28,7 +28,7 @@ function deleteTodoByIdService(id){
 
 
 export {
-    getTodosService,
+    
     createTodoService,
     toggleTodoByIdService,
     deleteTodoByIdService
