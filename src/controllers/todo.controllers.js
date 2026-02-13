@@ -8,10 +8,10 @@ export async function listTodos(req, res){
 }
 
 
-export function createTodos(req, res){
+export async function createTodos(req, res){
     try{
         const {task} = req.body;
-        const todo = createTodoService(task);
+        const todo = await createTodoService(task);
         res.status(201).json({message:"Created", todo});
     } catch(err){
         res.status(400).json({error:err.message});
