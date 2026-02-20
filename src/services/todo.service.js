@@ -9,7 +9,7 @@ export async function getTodosService(){
 export async function createTodoService(task){
     if(!task || typeof task !=="string" || task.trim()===""){
         // return res.status(400).json({error:"task is required. You should provide non-empty string"});
-        throw new error("Invalid task")
+        throw new Error("Invalid task")
     }
     return await ToDoModel.createTodo(task);
 }

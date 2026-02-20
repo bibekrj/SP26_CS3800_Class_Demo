@@ -1,7 +1,7 @@
 CREATE DATABASE todo_db;
 
 
-USE todo_do;
+USE todo_db;
 
 CREATE TABLE todos(
 id INT AUTO_INCREMENT PRIMARY KEY,
