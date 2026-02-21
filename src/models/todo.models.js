@@ -1,10 +1,12 @@
 import pool from "../db/connection.js";
 
-export async function getAllTodos(){
-    const [rows] = await pool.query("SELECT * FROM todos;")
-    console.log(rows);
-    return rows;
+import Todo from "./Todo.js"
 
+export async function getAllTodos(){
+    // const [rows] = await pool.query("SELECT * FROM todos;")
+    // console.log(rows);
+    // return rows;
+    return await Todo.findAll({order: [["id", "ASC"]]});
 }
 
 let nextId = 3;
@@ -28,10 +30,12 @@ export async function createTodo(task){
     // todos.push(todo);
 
     // return todo;
-    const [result] = await pool.query(
-        "INSERT INTO todos(task) VALUES (?)", [task]
-    );
-    return {id: result.insertId, task, completed:false};
+    // const [result] = await pool.query(
+    //     "INSERT INTO todos(task) VALUES (?)", [task]
+    // );
+    // return {id: result.insertId, task, completed:false};
+
+    return await Todo.create({task});
 
 }
 
