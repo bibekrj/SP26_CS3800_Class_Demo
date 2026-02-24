@@ -6,5 +6,5 @@ const app = createApp();
 
 
 app.listen(env.PORT, () => {
-    console.log(`Server running (${env.NODE_ENV}) at https://localhost:${env.PORT}`);
+    console.log(`Server running (${env.NODE_ENV}) at http://localhost:${env.PORT}`);
 });
