@@ -19,3 +19,23 @@ INSERT INTO todos(task) VALUES
 
 SELECT id, task, completed FROM todos;
 SELECT id, name, task, completed FROM todos WHERE name="nitin";
+
+
+ALTER TABLE tasks MODIFY COLUMN user_id INT NOT NULL;
+
+
+CREATE TABLE tasks(task_id INT PRIMARY KEY AUTO_INCREMENT, 
+		tasks VARCHAR(255), 
+		completed BOOLEAN DEFAULT false,
+		user_id INT NOT NULL,
+		CONSTRAINT fk_user_id FOREIGN KEY(user_id) REFERENCES users(user_id) ON DELETE CASCADE);
+
+CREATE TABLE users(user_id INT PRIMARY KEY AUTO_INCREMENT, 
+			user_name VARCHAR(255),
+			user_email VARCHAR(255) UNIQUE NOT NULL,
+			user_ta VARCHAR(255) NOT NULL);
+
+
+INSERT INTO users(user_email, user_password) value ("prince.patel@wright.edu", "jkashdfjh");
+
+INSERT INTO tasks(tasks, user_id) VALUES ("COMPLETE DB TODAY", 2);
