@@ -4,12 +4,12 @@ import sequelize from "../db/sequelize.js";
 const Todo = sequelize.define(
     "Todo",
     {
-        id: {
+       task_id: {
             type: DataTypes.INTEGER,
             primaryKey: true,
             autoIncrement: true
         },
-        task: { 
+        tasks: { 
             type: DataTypes.STRING(255),
             allowNull:false
         },
@@ -17,11 +17,15 @@ const Todo = sequelize.define(
             type: DataTypes.BOOLEAN,
             allowNull: true,
             default: false,
+        },
+        user_id: {
+            type: DataTypes.INTEGER,
+            allowNull: false
         }
     },
     {
-        tableName:"todos",
-        timestamps:false,
+        tableName:"tasks",
+        timestamps:true,
     }
 );
 
