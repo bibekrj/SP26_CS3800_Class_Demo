@@ -158,9 +158,7 @@ describe("createTodos", () => {
   });
 });
 
-// ═══════════════════════════════════════════════════════════════════════════
 // toggleTodo
-// ═══════════════════════════════════════════════════════════════════════════
 describe("toggleTodo", () => {
   test("responds with the toggled todo on success", () => {
     const toggled = { id: 1, task: "Buy milk", completed: true };
