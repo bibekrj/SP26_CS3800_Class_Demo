@@ -6,19 +6,23 @@ import { where } from "sequelize";
 const SALT_ROUNDS = 10;
 
 export async function register({name, email, password}){
+
         const normalizeEmail =  email.toLowerCase();
+        console.log(normalizeEmail, "Normalizaed email is")
 
         const existing = await User.findOne({where: {user_email: normalizeEmail}});
+        console.log("This line is after existing")
         if (existing){
+            console.log("cannot check for EXISTING ++++++++++++++++++++")
             return {ok: false, status: 409, error:"Email already registered"};
         }
 
         const passwordHash = await bcrypt.hash(password, SALT_ROUNDS);
 
         const user = await User.create({
-            name, 
+            user_name: name, 
             user_email: normalizeEmail,
-            passwordHash
+            user_password: passwordHash
         });
 
         const token = signAccessToken( {sub: String(user.user_id),  email: user.user_email})
@@ -36,7 +40,10 @@ export async function login({email, password}){
         return {ok: false, status: 401, error:"Invalid credentials"};
     }
 
-    const match = await bcrypt.compare(password, user.passwordHash);
+
+
+    const match = await bcrypt.compare(password, user.user_password);
+   
     if(!match){
         return {ok: false, status: 401, error:"Invalid credential"};
     }

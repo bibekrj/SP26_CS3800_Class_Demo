@@ -1,6 +1,6 @@
-import { sequelize } from "../db/sequelize.js";
-import { User } from "./User.js";
-import { Todo } from "./Todo.js"
+import  sequelize  from "../db/sequelize.js";
+import  User  from "./User.js";
+import Todo from "./Todo.js"
 
 
 User.hasMany(Todo, {foreignKey:"user_id", onDelete: "CASCADE"});
