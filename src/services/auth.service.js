@@ -5,7 +5,7 @@ import { where } from "sequelize";
 
 const SALT_ROUNDS = 10;
 
-export async function register({name, email, password}){
+export async function register({name, email, password, role}){
 
         const normalizeEmail =  email.toLowerCase();
         console.log(normalizeEmail, "Normalizaed email is")
@@ -22,12 +22,13 @@ export async function register({name, email, password}){
         const user = await User.create({
             user_name: name, 
             user_email: normalizeEmail,
-            user_password: passwordHash
+            user_password: passwordHash,
+            user_role: role
         });
 
         const token = signAccessToken( {sub: String(user.user_id),  email: user.user_email})
 
-        return {ok: true, data:{token, user:{id: user.user_id, name: user.user_name}}}
+        return {ok: true, data:{token, user:{id: user.user_id, name: user.user_name, role: user.user_role}}}
 
 }
 
@@ -49,5 +50,5 @@ export async function login({email, password}){
     }
 
     const token = signAccessToken({sub: String(user.user_id), email: user.user_email});
-    return {ok: true, data: {token, user:{id:user.user_id, name: user.user_name, email: user.user_email}}};
+    return {ok: true, data: {token, user:{id:user.user_id, name: user.user_name, email: user.user_email, role: user.user_role}}};
 }

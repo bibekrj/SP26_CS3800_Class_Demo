@@ -14,7 +14,7 @@ export async function requireAuth(req, res, next) {
         const decoded = verifyAccessToken(token);
         const userId = Number(decoded.sub);
 
-        const user = await User.findByPk(userId, {attributes:["user_id", "user_name", "user_email"]});
+        const user = await User.findByPk(userId, {attributes:["user_id", "user_name", "user_email", "user_role"]});
         console.log("calling middleware", userId, decoded)
         if (!user){
             return res.status(404).json({error:"User does not exist"});
