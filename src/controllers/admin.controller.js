@@ -1,4 +1,5 @@
-import { User, Todo } from "../models/index.js";
+// import { User, Todo } from "../models/index.js"; //controllers must exclusively call on  Services and NOT models
+
 import * as adminTodoService from "../services/admin.service.js"
 
 export async function listAllTodos(req, res, next){
@@ -11,15 +12,17 @@ export async function listAllTodos(req, res, next){
     }
 }
 
-
 export async function listAllUsers(req,res,next){
     try{
-        const users = await  User.findAll({
-            attributes:["user_id", "user_name", "user_email", "user_role",]
-        })
+        const users = await  adminTodoService.getAllUserService();
         return res.status(200).json({users});
     }
     catch(error){
         next(error);
     }
 }
+
+
+
+// TODO reset userpassword
+// TODO update user record

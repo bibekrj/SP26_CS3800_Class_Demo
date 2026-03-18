@@ -8,6 +8,9 @@ const router = Router();
 
 router.use(requireAuth);
 
+router.use(requireRole("admin", "staff", "users"));
+
+
 router.get("/", listTodos);
 router.post("/", createUserTodos);
 router.patch("/:id/toggle", toggleTodo);
