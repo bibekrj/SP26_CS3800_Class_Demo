@@ -6,11 +6,13 @@ import { requireRole } from "../middleware/role.middleware.js";
 
 const router = Router();
 
-router.use(requireAuth);
-router.use(requireRole("admin"));
+// router.use(requireAuth);
+// router.use(requireRole("admin"));
 
 
 router.get("/todos", adminController.listAllTodos);
 router.get("/users", adminController.listAllUsers);
 
 export default router;
+
+
