@@ -2,16 +2,18 @@
 
 import * as ToDoModel from "../models/todo.models.js"
 
-export async function getTodosService(){
-    return await ToDoModel.getAllTodos();
+export async function getUserTodosService(userId){
+    return await Todo.findAll({ where: {userId}, order: [["id", "ASC"]]});
 }
 
-export async function createTodoService(task){
+export async function createUserTodoService(userId, task){
+    console.log("got to service")
     if(!task || typeof task !=="string" || task.trim()===""){
         // return res.status(400).json({error:"task is required. You should provide non-empty string"});
         throw new Error("Invalid task")
     }
-    return await ToDoModel.createTodo(task);
+    console.log("completed service logic check")
+    return await ToDoModel.createUserTodo(userId, task);
 }
 
 function toggleTodoByIdService(id){
