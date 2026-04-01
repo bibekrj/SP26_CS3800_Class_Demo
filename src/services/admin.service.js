@@ -9,3 +9,11 @@ export async function getAllUserService(){
             attributes:["user_id", "user_name", "user_email", "user_role",]
         })
 }
+
+
+// export async function createUserTodoAdminService(user){
+//      if(!task || typeof task !=="string" || task.trim()===""){
+//         // return res.status(400).json({error:"task is required. You should provide non-empty string"});
+//         throw new Error("Invalid task")
+//     }
+// }

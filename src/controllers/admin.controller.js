@@ -1,6 +1,7 @@
 // import { User, Todo } from "../models/index.js"; //controllers must exclusively call on  Services and NOT models
 
 import * as adminTodoService from "../services/admin.service.js"
+import * as todoService from "../services/todo.service.js"
 
 export async function listAllTodos(req, res, next){
     try{
@@ -22,6 +23,18 @@ export async function listAllUsers(req,res,next){
         next(error);
     }
 }
+
+export async function createTodo(req, res, next){
+    try{
+        const {task} = req.body;
+        const todo = await todoService.createUserTodoService(1, task); //this will have to be updated to create TOdo tied to admin user
+        res.status(201).json({message:"Created", todo});
+    }
+    catch(err){
+        res.status(400).json({error: err.message});
+    }
+}
+
 
 
 

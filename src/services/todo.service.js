@@ -1,9 +1,24 @@
 // WILL NEVER HAVE ANYTHING RELATING TO HTTP CALLS OR RESPONSES
 
+// import { where } from "sequelize";
 import * as ToDoModel from "../models/todo.models.js"
+import { Todo } from "../models/index.js";
+import { getAllTodosService } from "./admin.service.js";
 
-export async function getUserTodosService(userId){
-    return await Todo.findAll({ where: {userId}, order: [["id", "ASC"]]});
+// export async function getUserTodosService(userId){
+
+//     return await Todo.findAll({ where: {userId}, order: [["id", "ASC"]]});
+// }
+
+export async function listTodos(user){
+    if(user.role === "admin"){
+        return await Todo.findAll({ where: {user_id}, order: [["task_id", "ASC"]]});
+    }
+
+    return Todo.findAll({
+        where: {user_id: user},
+        order: [["createdAt", "ASC"]]
+    })
 }
 
 export async function createUserTodoService(userId, task){
@@ -16,25 +31,40 @@ export async function createUserTodoService(userId, task){
     return await ToDoModel.createUserTodo(userId, task);
 }
 
-function toggleTodoByIdService(id){
-    // const todo = todos.find(t => t.id === id);
-    // if(!todo){
-    //     return null;
+export async function toggleTodo(user, todoId){
+    const todo = await Todo.findByPk(todoId);
+    if(!todo){
+        return{ok: false, status: 404, error: "Todo Not Found"};
+    }
+
+
+    todo.completed = !todo.completed;
+    console.log(todo)
+
+    await todo.save();
+
+    return {ok: true, status: 200 }
+
+} 
+
+
+export async function removeTodo(user, todoId){
+    const todo = await Todo.findByPk(todoId);
+    if(!todo){
+        return {ok: false, status: 404, error: "Todo not found"};
+    }
+
+    // if(user.role !== "admin" && todo.user){
+    //  return {ok: false, status: 403, error: "Forbidden"};
     // }
-    return ToDoModel.toggleTodoById(id);
+    await todo.destroy();
+
+    return {ok: true, status: 200}
 }
 
-function deleteTodoByIdService(id){
-    return ToDoModel.deleteTodoById(id);
-}
+// function deleteTodoByIdService(id){
+//     return ToDoModel.deleteTodoById(id);
+// }
 
-
-export {
-    
-    
-    toggleTodoByIdService,
-    deleteTodoByIdService
-
-};
 
 
