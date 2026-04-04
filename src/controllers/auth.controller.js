@@ -1,8 +1,8 @@
 import * as authService from "../services/auth.service.js"
 
 export async function register(req, res){
-    console.log("hello from constroller");
-    console.log(req.body);
+    // console.log("hello from constroller");
+    // console.log(req.body);
     const result = await authService.register(req.body);
     if(!result.ok) {
         return res.status(result.status).json({error: result.error});
@@ -11,6 +11,7 @@ export async function register(req, res){
 }
 
 export async function login(req, res){
+    console.log(req.body);
     const result = await authService.login(req.body);
 
     if (!result.ok){
