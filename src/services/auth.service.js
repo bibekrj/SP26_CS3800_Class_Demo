@@ -5,13 +5,13 @@ import { where } from "sequelize";
 
 const SALT_ROUNDS = 10;
 
-export async function register({name, email, password, role}){
+export async function register({name, email, password}){
 
         const normalizeEmail =  email.toLowerCase();
-        console.log(normalizeEmail, "Normalizaed email is")
+        // console.log(normalizeEmail, "Normalizaed email is")
 
         const existing = await User.findOne({where: {user_email: normalizeEmail}});
-        console.log("This line is after existing")
+        // console.log("This line is after existing")
         if (existing){
             console.log("cannot check for EXISTING ++++++++++++++++++++")
             return {ok: false, status: 409, error:"Email already registered"};
@@ -23,7 +23,7 @@ export async function register({name, email, password, role}){
             user_name: name, 
             user_email: normalizeEmail,
             user_password: passwordHash,
-            user_role: role
+            user_role: "user"
         });
 
         const token = signAccessToken( {sub: String(user.user_id),  email: user.user_email})
