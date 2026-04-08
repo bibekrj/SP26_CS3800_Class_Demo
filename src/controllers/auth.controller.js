@@ -14,7 +14,7 @@ export async function login(req, res){
     console.log(req.body);
     const result = await authService.login(req.body);
 
-    if (!result.k){
+    if (!result.ok){
         return res.status(result.status).json({error: result.error});
     }
 
