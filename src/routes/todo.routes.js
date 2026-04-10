@@ -10,7 +10,7 @@ import { requireRole } from "../middleware/role.middleware.js"
 
 const router = Router();
 
-// router.use(requireAuth);
+router.use(requireAuth);
 
 // router.use(requireRole("admin", "staff", "users"));
 

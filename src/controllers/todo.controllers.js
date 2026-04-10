@@ -7,7 +7,8 @@ import * as todoService from "../services/todo.service.js";
 
 export async function listTodos(req, res, next) {
   try {
-    const todos = await todoService.listTodos(1);
+    const todos = await todoService.listTodos(req.user.user_id);
+    console.log(todos);
     res.json({ count: todos.length, todos });
   } catch (err) {
     next(err);
@@ -17,8 +18,8 @@ export async function listTodos(req, res, next) {
 export async function createTodo(req, res, next) {
   try {
     const todo = await todoService.createUserTodoService(
-      // req.user.user_id,
-      1,
+      req.user.user_id,
+      // 1,
       req.body.tasks,
     );
     return res.status(201).json({ todo });
@@ -32,7 +33,7 @@ export async function toggleTodo(req, res, next) {
     // console.log("trying to print req")
     // console.log(req.params)
     const result = await todoService.toggleTodo(
-      1,
+    req.user.user_id,
       Number(req.params.id),
     );
     console.log(result)
@@ -49,7 +50,7 @@ export async function toggleTodo(req, res, next) {
 export async function removeTodo(req, res, next) {
   try {
     const result = await todoService.removeTodo(
-      1,
+      req.user.user_id,
       Number(req.params.id),
     );
     if (!result.ok) {
