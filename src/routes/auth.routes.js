@@ -9,4 +9,7 @@ router.post("/register", validateBody(["name", "email", "password"]), authContro
 // this needs to be done later //TODO
 router.post("/login", validateBody(["email", "password"]), authController.login);
 
+router.post("/forgot-password", validateBody(["email"]), authController.forgotPassword);
+router.post("/reset-password", validateBody(["token", "newPassword"]), authController.resetPassword);
+
 export default router;

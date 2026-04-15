@@ -5,10 +5,10 @@ import { User } from "../models/index.js";
 export async function requireAuth(req, res, next) {
     try{
         const header = req.headers.authorization || "";
-        console.log(header)
+        // console.log(header)
         const [type, token] = header.split(" ");
-        console.log(type);
-        console.log(token);
+        // console.log(type);
+        // console.log(token);
 
         if (type !=="Bearer" || !token){
            return res.status(401).json({error: "Missing or invalid Authorization header"});

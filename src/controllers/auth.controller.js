@@ -11,7 +11,7 @@ export async function register(req, res){
 }
 
 export async function login(req, res){
-    console.log(req.body);
+    // console.log(req.body);
     const result = await authService.login(req.body);
 
     if (!result.ok){
@@ -20,6 +20,29 @@ export async function login(req, res){
 
     return res.status(200).json(result.data);
 }
+
+export async function forgotPassword(req, res, next){
+    try{
+        const result = await authService.forgotPassword(req.body);
+        if(!result.ok) return res.status(result.status).json({error: result.error});
+        return res.status(200).json(result.data)
+    }catch(err){
+        next(err);
+    }
+}
+
+
+export async function resetPassword(req, res, next){
+    try{
+        const result = await authService.resetPassword(req.body);
+        if(!result.ok) return res.status(result.status).json({error: result.error});
+        return res.status(200).json(result.data)
+    }
+    catch(err){
+        next(err);
+    }
+}
+
 
 // TODO password reset
 // TODO Limit registration to "user" only from Normal UI 
