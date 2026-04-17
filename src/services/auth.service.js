@@ -79,7 +79,8 @@ export async function forgotPassword({email}){
 
     user.passwordResetTokenHash = hashedToken;
     user.passwordResetExpiresAt = expiresAt;
-
+    
+    console.log("The token is ", rawToken);
     await user.save();
     // this is where you'd send that email
     return {
